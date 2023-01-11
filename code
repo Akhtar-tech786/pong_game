@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>JavaScript Pong</title>
+
+  <script>
+
+    // Step 1: Create the canvas
+
+    var canvas = document.createElement("canvas");
+
+    var ctx = canvas.getContext("2d");
+
+    canvas.width = 600;
+
+    canvas.height = 400;
+
+    document.body.appendChild(canvas);
+
+    // Step 2: Draw the game elements
+
+    function draw() {
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillRect(player1X, player1Y, 10, 50);
+
+      ctx.fillRect(player2X, player2Y, 10, 50);
+
+      ctx.fillRect(ballX, ballY, 10, 10);
+
+    }
+
+    // Step 3: Implement the game logic
+
+    var player1Y = 150;
+
+    var player2Y = 150;
+
+    var player1X = 20;
+
+    var player2X = canvas.width - 30;
+
+    var ballX = canvas.width / 2;
+
+    var ballY = canvas.height / 2;
+
+    var ballSpeedX = 5;
+
+    var ballSpeedY = 5;
+
+    function update() {
+
+      // Move player 1 up or down based on user input
+
+      if (upPressed) {
+
+        player1Y -= 5;
+
+      }
+
+      if (downPressed) {
+
+        player1Y += 5;
+
+      }
+
+      // Move player 2 up or down based on user input
+
+      if (wPressed) {
+
+        player2Y -= 5;
+
+      }
+
+      if (sPressed) {
+
+        player2Y += 5;
+
+      }
+
+      // Move the ball and change its direction if it hits the top or bottom of the canvas
+
+      ballX += ballSpeedX;
+
+      ballY += ballSpeedY;
+
+      if (ballY > canvas.height || ballY < 0) {
+
+        ballSpeedY = -ballSpeedY;
+
+      }
+
+      // Check for collision between the ball and player 1 or player 2
+
+      if (ballX > player2X && ballX < player2X + 10 && ballY > player2Y && ballY < player2Y + 50) {
+
+        ballSpeedX = -ballSpeedX;
+
+      }
+
+      if (ballX > player1X && ballX < player1X + 10 && ballY > player1Y && ballY < player1Y + 50) {
+
+        ballSpeedX = -ballSpeedX;
+
+      }
+
+    }
+
+    // Step 4: Animate the game
+
+    setInterval(function() {
+
+      update();
+
+      draw();
+
+    }, 1000/60);
+
+    
+
+    // Step 5: Handle user input
+
+    var upPressed = false
+
